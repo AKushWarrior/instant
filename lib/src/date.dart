@@ -16,13 +16,14 @@ String formatDate(
   var month = date.month;
   var year = date.year;
   String returner = "";
+  bool isLastYear = false;
   for (var l = 0; l < format.length; l += 2) {
     if (l != 0) {
       returner = returner + divider;
     }
-    bool isLastYear = false;
     switch (format[l]) {
       case "M": {
+        isLastYear = false;
         if (month >= 10) {
           returner = returner + '$month';
         } else {
@@ -31,6 +32,7 @@ String formatDate(
       }
       break;
       case "D": {
+        isLastYear = false;
         if (day >= 10) {
           returner = returner + '$day';
         } else {
@@ -48,7 +50,8 @@ String formatDate(
           isLastYear = true;
         } else {
           returner =
-              returner.substring(0, returner.length - 2) + divider + '$year';
+              returner.substring(0, returner.length - 3) + '$year';
+          isLastYear = true;
         }
       }
       break;
@@ -163,10 +166,18 @@ String curWeekdayAsString() {
   return days[now.weekday];
 }
 
-/// Returns current day of the week as an int (Mon. == 1 ... Sun. == 7).
-int curWeekdayAsInt() {
-  var now = DateTime.now();
-  return now.weekday;
+/// Returns day of the week of given DateTime as a text String.
+String weekdayAsString({@required DateTime date}) {
+  Map<int, String> days = {
+    1: "Monday",
+    2: "Tuesday",
+    3: "Wednesday",
+    4: "Thursday",
+    5: "Friday",
+    6: "Saturday",
+    7: "Sunday"
+  };
+  return days[date.weekday];
 }
 
 ///Returns approximate difference of given DateTimes in days as an int.

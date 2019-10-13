@@ -1,4 +1,4 @@
-#Instant
+# Instant
 
 A library for manipulating and formatting DateTimes in Dart.
 Dates and times have never been easier.
@@ -8,4 +8,8 @@ Dates and times have never been easier.
 - | Manual time/date displays
 - | Customizeable and modular
 
+Instant is streamlined and easy to learn for beginners and
+experienced coders alike. To get started, visit:
+- | The docs: https://aditya-kishore.gitbook.io/instant/
+- | The auto-generated DartDocs: (linked to the right) 
 
