@@ -12,4 +12,3 @@ Instant is streamlined and easy to learn for beginners and
 experienced coders alike. To get started, visit:
 - | The docs: https://aditya-kishore.gitbook.io/instant/
 - | The auto-generated DartDocs: (linked to the right) 
-
