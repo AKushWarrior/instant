@@ -115,7 +115,7 @@ String formatTime(
 /// Can be given any divider (ex. ':' '.' '/').
 ///
 /// Can be given either true or false for 24hr time.
-String formatTimeNow(
+String formatCurTime(
     {String format = "HHMMSS", String divider = ":", bool is24hr = false}) {
   var now = DateTime.now();
   return formatTime(

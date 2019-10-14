@@ -7,6 +7,7 @@ Dates and times have never been easier.
 - | Current time/date displays
 - | Manual time/date displays
 - | Customizeable and modular
+- | A more sane stopwatch alternative
 
 Instant is streamlined and easy to learn for beginners and
 experienced coders alike. To get started, visit:
