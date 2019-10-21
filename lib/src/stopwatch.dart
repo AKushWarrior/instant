@@ -1,4 +1,4 @@
-//    Instant, a date manipulation library for Dart.
+//    Instant, a time manipulation library for Dart.
 //    Copyright (C) 2019 Aditya Kishore
 //
 //    See instant.dart for full license notice...
@@ -6,104 +6,96 @@
 part of 'main.dart';
 
 /// An alternative to the built in Stopwatch class.
-/// This runs all its code in a separate Isolate, which saves memory.
-/// It's also more sane than the traditional.
+///
+/// This doesn't run in the background and instead uses time comparisons,
+/// which saves a LOT of memory.
+///
+/// It's also more somewhat more sane than the traditional.
 class InstantStopwatch {
 
-  /// For internal use. DON'T USE!
-  Isolate stopWatchIsolate;
-  /// For internal use. DON'T USE!
-  ReceivePort receivePort = ReceivePort();
-  /// For internal use. DON'T USE!
-  bool running = false;
+  DateTime _orig;
 
-  /// Initializes/resets the Stopwatch.
-  /// This MUST be done before playing or pausing the Stopwatch.
-  /// This leaves the stopwatch in a paused state.
-  void init () async {
-    stopWatchIsolate = await Isolate.spawn(run, receivePort.sendPort);
-    stopWatchIsolate.pause(stopWatchIsolate.pauseCapability);
-    running = false;
-  }
+  bool _running = false;
+
+  Duration _atPause = Duration(microseconds: 0);
 
   /// Starts the stopwatch. It will now count upward in increments of 1
   /// millisecond.
   void play () {
-    stopWatchIsolate.resume(stopWatchIsolate.pauseCapability);
-    running = true;
+    _running = true;
+    _orig = DateTime.now();
   }
 
   /// Pauses the stopwatch. It will now remain paused at the latest time.
   void pause () {
-    stopWatchIsolate.pause(stopWatchIsolate.pauseCapability);
-    running = false;
+    _atPause = _atPause + Duration(milliseconds: run(_orig));
+    _running = false;
+  }
+
+  /// Resets stopwatch back to zero.
+  void reset () {
+    pause();
+    _running = false;
+    _atPause = Duration(microseconds: 0);
   }
 
   /// Returns true if the stopwatch is unpaused and false if paused.
   bool isRunning () {
-    return running;
-  }
-
-  /// Destroys the stopwatch. This will save memory space. You will have to call
-  /// init again if you want to use this object again.
-  void destroy () {
-    stopWatchIsolate.kill(priority: Isolate.immediate);
+    return _running;
   }
 
   /// Returns the time that the stopwatch has recorded as elapsed as a Duration.
-  Future<Duration> getStopwatchValue() async {
-    var ms = await receivePort.lastWhere((dynamic element){return element.runtimeType == int;});
-    return Duration(milliseconds: ms);
+  Duration getStopwatchValue() {
+    if (!_running) {
+      _orig = DateTime.now();
+    }
+    return Duration(milliseconds: run(_orig)) + _atPause;
   }
 
   /// Returns the time that the stopwatch has recorded as elapsed in milliseconds.
-  Future<int> getStopwatchInMilliseconds () async {
-    var value = (await getStopwatchValue()).inMilliseconds;
+  int getStopwatchInMilliseconds () {
+    var value = (getStopwatchValue()).inMilliseconds;
     return value;
   }
 
   /// Returns the time that the stopwatch has recorded as elapsed in seconds.
-  Future<int> getStopwatchInSeconds () async {
-    var value = (await getStopwatchValue()).inSeconds;
+  int getStopwatchInSeconds () {
+    var value = (getStopwatchValue()).inSeconds;
     return value;
   }
 
   /// Returns the time that the stopwatch has recorded as elapsed in minutes.
-  Future<int> getStopwatchInMinutes () async  {
-    var value = (await getStopwatchValue()).inMinutes;
+  int getStopwatchInMinutes () {
+    var value = (getStopwatchValue()).inMinutes;
     return value;
   }
 
   /// Returns the time that the stopwatch has recorded as elapsed in hours.
-  Future<int> getStopwatchInHours () async {
-    var value = (await getStopwatchValue()).inHours;
+  int getStopwatchInHours () {
+    var value = (getStopwatchValue()).inHours;
     return value;
   }
 
   /// Returns the time that the stopwatch has recorded as elapsed in days.
-  Future<int> getStopwatchInDays () async {
-    var value = (await getStopwatchValue()).inDays;
+  int getStopwatchInDays () {
+    var value = (getStopwatchValue()).inDays;
     return value;
   }
 
   /// Returns the time that the stopwatch has recorded as elapsed in weeks.
-  Future<int> getStopwatchInWeeks () async {
-    var value = ((await getStopwatchValue()).inDays/7).round();
+  int getStopwatchInWeeks (){
+    var value = ((getStopwatchValue()).inDays/7).round();
     return value;
   }
 
   /// Returns the time that the stopwatch has recorded as elapsed in months.
-  Future<int> getStopwatchInMonths () async {
-    var value = ((await getStopwatchValue()).inDays/30.44).round();
+  int getStopwatchInMonths () {
+    var value = ((getStopwatchValue()).inDays/30.44).round();
     return value;
   }
 
-  /// Purely for INTERNAL use. Don't use!
-  void run(SendPort sendPort) {
-    int counter = 0;
-    Timer.periodic(Duration(milliseconds: 1), (Timer t) {
-      counter++;
-      sendPort.send(counter);
-    });
+  /// INTERNAL | DON'T USE
+  int run (DateTime orig) {
+    return diffInMillisecs(x: DateTime.now(), y: orig);
   }
 }

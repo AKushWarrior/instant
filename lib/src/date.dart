@@ -1,4 +1,4 @@
-//    Instant, a date manipulation library for Dart.
+//    Instant, a time manipulation library for Dart.
 //    Copyright (C) 2019 Aditya Kishore
 //
 //    See instant.dart for full license notice...
@@ -187,6 +187,8 @@ String weekdayAsString({@required DateTime date}) {
 
 ///Returns approximate difference of given DateTimes in days as an int.
 int diffInDays({@required DateTime x, @required DateTime y}) {
+  x = x.toUtc();
+  y = y.toUtc();
  Duration dur = x.difference(y);
  return dur.inDays;
 }

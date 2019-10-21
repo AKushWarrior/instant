@@ -1,4 +1,4 @@
-//    Instant, a date manipulation library for Dart.
+//    Instant, a time manipulation library for Dart.
 //    Copyright (C) 2019 Aditya Kishore
 //
 //    This program is free software: you can redistribute it and/or modify
