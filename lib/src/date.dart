@@ -3,6 +3,11 @@
 //
 //    See instant.dart for full license notice...
 
+// ignore_for_file: omit_local_variable_types, prefer_single_quotes
+// ignore_for_file: non_constant_identifier_names, directives_ordering
+// ignore_for_file: prefer_typing_uninitialized_variables, camel_case_types
+// ignore_for_file: annotate_overrides
+
 part of 'main.dart';
 
 /// Formats DateTime into a # string with the date.
@@ -27,42 +32,45 @@ String formatDate(
       returner = returner + divider;
     }
     switch (format[l]) {
-      case "M": {
-        isLastYear = false;
-        if (month >= 10) {
-          returner = returner + '$month';
-        } else {
-          returner = returner + '0$month';
-        }
-      }
-      break;
-      case "D": {
-        isLastYear = false;
-        if (day >= 10) {
-          returner = returner + '$day';
-        } else {
-          returner = returner + '0$day';
-        }
-      }
-      break;
-      case "Y": {
-        if (!isLastYear) {
-          if (int.parse(year.toString().substring(2)) >= 10) {
-            returner = returner + year.toString().substring(2);
+      case "M":
+        {
+          isLastYear = false;
+          if (month >= 10) {
+            returner = returner + '$month';
           } else {
-            returner = returner + '0' + year.toString().substring(2);
+            returner = returner + '0$month';
           }
-          isLastYear = true;
-        } else {
-          returner =
-              returner.substring(0, returner.length - 3) + '$year';
-          isLastYear = true;
         }
-      }
-      break;
-      default: {
-        throw ArgumentError("Invalid format passed!");
-      }
+        break;
+      case "D":
+        {
+          isLastYear = false;
+          if (day >= 10) {
+            returner = returner + '$day';
+          } else {
+            returner = returner + '0$day';
+          }
+        }
+        break;
+      case "Y":
+        {
+          if (!isLastYear) {
+            if (int.parse(year.toString().substring(2)) >= 10) {
+              returner = returner + year.toString().substring(2);
+            } else {
+              returner = returner + '0' + year.toString().substring(2);
+            }
+            isLastYear = true;
+          } else {
+            returner = returner.substring(0, returner.length - 3) + '$year';
+            isLastYear = true;
+          }
+        }
+        break;
+      default:
+        {
+          throw ArgumentError("Invalid format passed!");
+        }
     }
   }
   return returner;
@@ -107,22 +115,22 @@ String dateInWords(DateTime date) {
 }
 
 /// Returns the local current date in words (ex. 'January 19, 2019').
-String curDateInWords() {
+String get curDateInWords {
   return dateInWords(DateTime.now());
 }
 
 /// Returns local current month as a # String formatted MM (ex. '04').
-String curMonthAsString() {
+String get curMonthAsString {
   return formatCurDate(format: 'MM');
 }
 
 /// Returns local current day as a # String formatted DD (ex. '04').
-String curDayAsString() {
+String get curDayAsString {
   return formatCurDate(format: 'DD');
 }
 
 /// Returns local current year as a # String formatted YYYY (ex. '2019').
-String curYearAsString() {
+String get curYearAsString {
   return formatCurDate(format: 'YYYY');
 }
 
@@ -142,22 +150,22 @@ String yearAsString(DateTime date) {
 }
 
 /// Returns current month as an int (January == 1 ... December == 12).
-int curMonthAsInt() {
+int get curMonthAsInt {
   return DateTime.now().month;
 }
 
 /// Returns current day as an int (1 ... 31).
-int curDayAsInt() {
+int get curDayAsInt {
   return DateTime.now().day;
 }
 
 /// Returns current year as an int (ex. 2019).
-int curYearAsInt() {
+int get curYearAsInt {
   return DateTime.now().year;
 }
 
 /// Returns current day of the week as a text String.
-String curWeekdayAsString() {
+String get curWeekdayAsString {
   Map<int, String> days = {
     1: "Monday",
     2: "Tuesday",
@@ -183,30 +191,4 @@ String weekdayAsString({@required DateTime date}) {
     7: "Sunday"
   };
   return days[date.weekday];
-}
-
-///Returns approximate difference of given DateTimes in days as an int.
-int diffInDays({@required DateTime x, @required DateTime y}) {
-  x = x.toUtc();
-  y = y.toUtc();
- Duration dur = x.difference(y);
- return dur.inDays;
-}
-
-///Returns approximate difference of given DateTimes in weeks as an int.
-int diffInWeeks({@required DateTime x, @required DateTime y}) {
-  Duration dur = x.difference(y);
-  return (dur.inDays/7).round();
-}
-
-///Returns approximate difference of given DateTimes in months as an int.
-int diffInMonths({@required DateTime x, @required DateTime y}) {
-  Duration dur = x.difference(y);
-  return (dur.inDays/30.44).round();
-}
-
-///Returns approximate difference of given DateTimes in years as an int.
-int diffInYears({@required DateTime x, @required DateTime y}) {
-  Duration dur = x.difference(y);
-  return (dur.inDays/365.25).round();
 }

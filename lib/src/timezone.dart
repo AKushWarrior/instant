@@ -2,7 +2,10 @@
 //    Copyright (C) 2019 Aditya Kishore
 //
 //    See instant.dart for full license notice...
-
+// ignore_for_file: omit_local_variable_types, prefer_single_quotes
+// ignore_for_file: non_constant_identifier_names, directives_ordering
+// ignore_for_file: prefer_typing_uninitialized_variables, camel_case_types
+// ignore_for_file: annotate_overrides
 part of 'main.dart';
 
 /// All avaible timezones for `dateTimeInZone`.
@@ -31,7 +34,6 @@ Map<String, double> timeZoneOffsets = {
   'IRST': 3.5,
   'MSK': 3,
   'CEST': 2,
-  'CET': 1,
   'BST': 1,
   'GMT': 0,
   'UTC': 0,
@@ -53,95 +55,101 @@ Map<String, double> timeZoneOffsets = {
   'AoE': -12
 };
 
-/// Takes a timezone, and returns the current DateTime adjusted for that timezone.
+/// Takes a timezone, and returns the current DateTime in that timezone.
 ///
 /// See `timeZoneOffsets` for all available time zones.
-DateTime curDateTimeByZone ({@required String zone}) {
+DateTime curDateTimeByZone({@required String zone}) {
   var now = DateTime.now();
   DateTime toUTC = now.toUtc();
   DateTime returner;
   Duration subtr;
   Duration addr;
   if (timeZoneOffsets[zone] <= 0) {
-    subtr = Duration(hours: timeZoneOffsets[zone].abs().truncate(),
+    subtr = Duration(
+        hours: timeZoneOffsets[zone].abs().truncate(),
         minutes: ((timeZoneOffsets[zone].abs() % 1) * 60).round());
     returner = toUTC.subtract(subtr);
-  }
-  else {
-    addr = Duration(hours: timeZoneOffsets[zone].truncate(),
+  } else {
+    addr = Duration(
+        hours: timeZoneOffsets[zone].truncate(),
         minutes: ((timeZoneOffsets[zone] % 1) * 60).round());
     returner = toUTC.add(addr);
   }
   return returner;
 }
 
-/// Takes a UTC offset, and returns the current DateTime adjusted for that offset.
+/// Takes a UTC offset, and returns the current DateTime with that offset.
 ///
 /// Generally, dateTimeByZone is preferable for readability purposes, so use
 /// that if possible. Only use this if desired timezone is not listed in
 /// `timeZoneOffsets`.
-DateTime curDateTimeByUtcOffset ({@required double offset}) {
-  var now = DateTime.now();
-  DateTime toUTC = now.toUtc();
+DateTime curDateTimeByUtcOffset({@required double offset}) {
+  var now = DateTime.now().toUtc();
   DateTime returner;
   Duration subtr;
   Duration addr;
   if (offset <= 0) {
-    subtr = Duration(hours: offset.abs().truncate(),
+    subtr = Duration(
+        hours: offset.abs().truncate(),
         minutes: ((offset.abs() % 1) * 60).round());
-    returner = toUTC.subtract(subtr);
-  }
-  else {
-    addr = Duration(hours: offset.truncate(),
-        minutes: ((offset % 1) * 60).round());
-    returner = toUTC.add(addr);
+    returner = now.subtract(subtr);
+  } else {
+    addr = Duration(
+        hours: offset.truncate(), minutes: ((offset % 1) * 60).round());
+    returner = now.add(addr);
   }
   return returner;
 }
 
 /// Takes a timezone and Datetime.
 ///
-/// Returns the given DateTime adjusted for that timezone.
+/// Returns the given DateTime adjusted to that timezone.
 ///
 /// See `timeZoneOffsets` for all available time zones.
-DateTime dateTimeToZone ({@required String zone, @required DateTime datetime}) {
-  DateTime toUTC = datetime.toUtc();
+///
+/// Assumes datetime is in UTC.
+DateTime dateTimeToZone({@required String zone, @required DateTime datetime}) {
   DateTime returner;
   Duration subtr;
   Duration addr;
+  datetime = datetime.toUtc();
   if (timeZoneOffsets[zone] <= 0) {
-    subtr = Duration(hours: timeZoneOffsets[zone].abs().truncate(),
+    subtr = Duration(
+        hours: timeZoneOffsets[zone].abs().truncate(),
         minutes: ((timeZoneOffsets[zone].abs() % 1) * 60).round());
-    returner = toUTC.subtract(subtr);
-  }
-  else {
-    addr = Duration(hours: timeZoneOffsets[zone].truncate(),
+    returner = datetime.subtract(subtr);
+  } else {
+    addr = Duration(
+        hours: timeZoneOffsets[zone].truncate(),
         minutes: ((timeZoneOffsets[zone] % 1) * 60).round());
-    returner = toUTC.add(addr);
+    returner = datetime.add(addr);
   }
   return returner;
 }
 
 /// Takes a UTC offset and DateTime.
 ///
-/// Returns the given DateTime adjusted for that offset.
+/// Returns the given DateTime adjusted to that offset.
 ///
-/// Generally, dateTimeByZone is preferable for readability purposes, so use
+/// Generally, dateTimeToZone is preferable for readability purposes, so use
 /// that if possible. Only use this if desired timezone/offset is not listed in
 /// `timeZoneOffsets`.
-DateTime dateTimeToOffset ({@required double offset, @required DateTime datetime}) {
-  DateTime toUTC = datetime.toUtc();
+///
+/// Assumes datetime is in UTC.
+DateTime dateTimeToOffset(
+    {@required double offset, @required DateTime datetime}) {
+  DateTime toUTC = datetime;
   DateTime returner;
   Duration subtr;
   Duration addr;
   if (offset <= 0) {
-    subtr = Duration(hours: offset.abs().truncate(),
+    subtr = Duration(
+        hours: offset.abs().truncate(),
         minutes: ((offset.abs() % 1) * 60).round());
     returner = toUTC.subtract(subtr);
-  }
-  else {
-    addr = Duration(hours: offset.truncate(),
-        minutes: ((offset % 1) * 60).round());
+  } else {
+    addr = Duration(
+        hours: offset.truncate(), minutes: ((offset % 1) * 60).round());
     returner = toUTC.add(addr);
   }
   return returner;

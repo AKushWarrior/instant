@@ -2,7 +2,10 @@
 //    Copyright (C) 2019 Aditya Kishore
 //
 //    See instant.dart for full license notice...
-
+// ignore_for_file: omit_local_variable_types, prefer_single_quotes
+// ignore_for_file: non_constant_identifier_names, directives_ordering
+// ignore_for_file: prefer_typing_uninitialized_variables, camel_case_types
+// ignore_for_file: annotate_overrides
 part of 'main.dart';
 
 /// Formats DateTime into a # string with the time.
@@ -10,7 +13,7 @@ part of 'main.dart';
 /// Ex. output is "02:08:13 P.M." for is24hr == false.
 /// Ex. output is "14:08:13" for is24hr == true.
 ///
-/// Can be given 'HH' (hour) 'MM' (minute) 'SS' (second) and 'III' (millisecond)
+/// Can be given 'HH' (hour) 'MM' (minute) 'SS' (second) 'III' (millisecond) and 'OOO' (microsecond)
 /// in any order for format (ex. 'HHMMSS' 'MMSSIII' 'MM' 'SS' 'HHMM').
 ///
 /// Can be given any divider (ex. ':' '.' '/').
@@ -25,13 +28,13 @@ String formatTime(
   var second = time.month;
   var hour = time.hour;
   var milli = time.millisecond;
+  var micro = time.microsecond;
 
   String returner = "";
   for (var l = 0; l < format.length; l += 2) {
     if (l != 0) {
       returner = returner + divider;
     }
-    bool isLastYear = false;
     switch (format[l]) {
       case "H":
         {
@@ -77,12 +80,24 @@ String formatTime(
       case "I":
         {
           l++;
-          if (milli >= 10) {
+          if (milli >= 100) {
             returner = returner + '$milli';
           } else if (milli < 10) {
             returner = returner + '00$milli';
           } else {
             returner = returner + '0$milli';
+          }
+        }
+        break;
+      case "O":
+        {
+          l++;
+          if (micro >= 100) {
+            returner = returner + '$micro';
+          } else if (micro < 10) {
+            returner = returner + '00$micro';
+          } else {
+            returner = returner + '0$micro';
           }
         }
         break;
@@ -96,8 +111,7 @@ String formatTime(
   if (!is24hr) {
     if (hour > 12) {
       returner = returner + " P.M.";
-    }
-    else {
+    } else {
       returner = returner + " A.M.";
     }
   }
@@ -122,28 +136,9 @@ String formatCurTime(
       time: now, format: format, divider: divider, is24hr: is24hr);
 }
 
-///Returns approximate difference of given DateTimes in days as an int.
-int diffInHrs({@required DateTime x, @required DateTime y}) {
-  Duration dur = x.difference(y);
-  return dur.inHours;
-}
-
-///Returns approximate difference of given DateTimes in weeks as an int.
-int diffInMins(DateTime x, DateTime y) {
-  Duration dur = x.difference(y);
-  return dur.inMinutes;
-}
-
-///Returns approximate difference of given DateTimes in months as an int.
-int diffInSecs({@required DateTime x, @required DateTime y}) {
-  Duration dur = x.difference(y);
-  return dur.inSeconds;
-}
-
-///Returns approximate difference of given DateTimes in years as an int.
-int diffInMillisecs({@required DateTime x, @required DateTime y}) {
-  Duration dur = x.difference(y);
-  return dur.inMilliseconds;
+/// Returns given DateTime's microsecond as a # String formatted III (ex. '004').
+String microsecAsString(DateTime time) {
+  return formatTime(time: time, format: 'OOO');
 }
 
 /// Returns given DateTime's millisecond as a # String formatted III (ex. '004').
@@ -168,41 +163,41 @@ String hrAsString(DateTime time) {
 
 /// Returns local current DateTime's millisecond as a # String formatted III
 /// (ex. '004').
-String curMillisecAsString() {
+String get curMillisecAsString {
   return formatTime(time: DateTime.now(), format: 'III');
 }
 
 /// Returns local current DateTime's second as a # String formatted SS (ex. '04').
-String curSecAsString() {
+String get curSecAsString {
   return formatTime(time: DateTime.now(), format: 'SS');
 }
 
 /// Returns local current DateTime's minute as a # String formatted MM (ex. '04').
-String curMinAsString() {
+String get curMinAsString {
   return formatTime(time: DateTime.now(), format: 'MM');
 }
 
 /// Returns local current DateTime's hour as a # String formatted HH (ex. '14').
-String curHrAsString() {
+String get curHrAsString {
   return formatTime(time: DateTime.now(), format: 'HH');
 }
 
 /// Returns current millisecond as an int (0...999).
-int curMillisecAsInt() {
+int get curMillisecAsInt {
   return DateTime.now().millisecond;
 }
 
 /// Returns current second as an int (0...59).
-int curSecAsInt() {
+int get curSecAsInt {
   return DateTime.now().second;
 }
 
 /// Returns local current minute as an int (0...59).
-int curMinAsInt() {
+int get curMinAsInt {
   return DateTime.now().minute;
 }
 
 /// Returns local current hour as an int (1...24).
-int curHrAsInt() {
+int get curHrAsInt {
   return DateTime.now().hour;
 }
