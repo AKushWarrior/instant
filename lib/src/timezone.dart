@@ -31,6 +31,7 @@ Map<String, double> timeZoneOffsets = {
   'IRST': 3.5,
   'MSK': 3,
   'CEST': 2,
+  'CET': 1,
   'BST': 1,
   'GMT': 0,
   'UTC': 0,
