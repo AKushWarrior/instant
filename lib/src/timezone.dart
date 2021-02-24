@@ -2,10 +2,6 @@
 //    Copyright (C) 2019 Aditya Kishore
 //
 //    See instant.dart for full license notice...
-// ignore_for_file: omit_local_variable_types, prefer_single_quotes
-// ignore_for_file: non_constant_identifier_names, directives_ordering
-// ignore_for_file: prefer_typing_uninitialized_variables, camel_case_types
-// ignore_for_file: annotate_overrides
 part of 'main.dart';
 
 /// All avaible timezones for `dateTimeInZone`.
@@ -58,21 +54,24 @@ Map<String, double> timeZoneOffsets = {
 /// Takes a timezone, and returns the current DateTime in that timezone.
 ///
 /// See `timeZoneOffsets` for all available time zones.
-DateTime curDateTimeByZone({@required String zone}) {
+DateTime curDateTimeByZone({required String zone}) {
   var now = DateTime.now();
-  DateTime toUTC = now.toUtc();
+  var toUTC = now.toUtc();
   DateTime returner;
   Duration subtr;
   Duration addr;
-  if (timeZoneOffsets[zone] <= 0) {
+
+  var offset = timeZoneOffsets[zone];
+  if (offset == null) throw ArgumentError('Unsupported zone: $zone');
+
+  if (offset <= 0) {
     subtr = Duration(
-        hours: timeZoneOffsets[zone].abs().truncate(),
-        minutes: ((timeZoneOffsets[zone].abs() % 1) * 60).round());
+        hours: offset.abs().truncate(),
+        minutes: ((offset.abs() % 1) * 60).round());
     returner = toUTC.subtract(subtr);
   } else {
     addr = Duration(
-        hours: timeZoneOffsets[zone].truncate(),
-        minutes: ((timeZoneOffsets[zone] % 1) * 60).round());
+        hours: offset.truncate(), minutes: ((offset % 1) * 60).round());
     returner = toUTC.add(addr);
   }
   return returner;
@@ -83,7 +82,7 @@ DateTime curDateTimeByZone({@required String zone}) {
 /// Generally, dateTimeByZone is preferable for readability purposes, so use
 /// that if possible. Only use this if desired timezone is not listed in
 /// `timeZoneOffsets`.
-DateTime curDateTimeByUtcOffset({@required double offset}) {
+DateTime curDateTimeByUtcOffset({required double offset}) {
   var now = DateTime.now().toUtc();
   DateTime returner;
   Duration subtr;
@@ -108,20 +107,23 @@ DateTime curDateTimeByUtcOffset({@required double offset}) {
 /// See `timeZoneOffsets` for all available time zones.
 ///
 /// Assumes datetime is in UTC.
-DateTime dateTimeToZone({@required String zone, @required DateTime datetime}) {
+DateTime dateTimeToZone({required String zone, required DateTime datetime}) {
   DateTime returner;
   Duration subtr;
   Duration addr;
   datetime = datetime.toUtc();
-  if (timeZoneOffsets[zone] <= 0) {
+
+  var offset = timeZoneOffsets[zone];
+  if (offset == null) throw ArgumentError('Unsupported zone: $zone');
+
+  if (offset <= 0) {
     subtr = Duration(
-        hours: timeZoneOffsets[zone].abs().truncate(),
-        minutes: ((timeZoneOffsets[zone].abs() % 1) * 60).round());
+        hours: offset.abs().truncate(),
+        minutes: ((offset.abs() % 1) * 60).round());
     returner = datetime.subtract(subtr);
   } else {
     addr = Duration(
-        hours: timeZoneOffsets[zone].truncate(),
-        minutes: ((timeZoneOffsets[zone] % 1) * 60).round());
+        hours: offset.truncate(), minutes: ((offset % 1) * 60).round());
     returner = datetime.add(addr);
   }
   return returner;
@@ -137,8 +139,8 @@ DateTime dateTimeToZone({@required String zone, @required DateTime datetime}) {
 ///
 /// Assumes datetime is in UTC.
 DateTime dateTimeToOffset(
-    {@required double offset, @required DateTime datetime}) {
-  DateTime toUTC = datetime;
+    {required double offset, required DateTime datetime}) {
+  var toUTC = datetime;
   DateTime returner;
   Duration subtr;
   Duration addr;

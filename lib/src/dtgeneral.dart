@@ -1,9 +1,6 @@
 part of 'main.dart';
 
-// ignore_for_file: omit_local_variable_types, prefer_single_quotes
-// ignore_for_file: non_constant_identifier_names, directives_ordering
-// ignore_for_file: prefer_typing_uninitialized_variables, camel_case_types
-// ignore_for_file: annotate_overrides
+
 
 /// Adds given amount (amount) of given units (units) to given DateTime (orig).
 ///
@@ -27,35 +24,35 @@ part of 'main.dart';
 ///
 /// - 'y' (years)
 DateTime add(
-    {@required DateTime orig, @required int amount, @required String units}) {
+    {required DateTime orig, required int amount, required String units}) {
   switch (units) {
-    case "ms":
+    case 'ms':
       orig = orig.add(Duration(milliseconds: amount));
       break;
-    case "s":
+    case 's':
       orig = orig.add(Duration(seconds: amount));
       break;
-    case "min":
+    case 'min':
       orig = orig.add(Duration(minutes: amount));
       break;
-    case "h":
+    case 'h':
       orig = orig.add(Duration(hours: amount));
       break;
-    case "d":
+    case 'd':
       orig = orig.add(Duration(days: amount));
       break;
-    case "w":
+    case 'w':
       orig = orig.add(Duration(days: amount * 7));
       break;
-    case "mon":
+    case 'mon':
       orig = _addMonths(orig, amount);
       break;
-    case "y":
+    case 'y':
       orig = _addMonths(orig, amount * 12);
       break;
     default:
       throw ArgumentError(
-          "This unit is unsupported. See docs for supported units...");
+          'This unit is unsupported. See docs for supported units...');
   }
   return orig;
 }
@@ -82,35 +79,35 @@ DateTime add(
 ///
 /// - 'y' (years)
 DateTime subtract(
-    {@required DateTime orig, @required int amount, @required String units}) {
+    {required DateTime orig, required int amount, required String units}) {
   switch (units) {
-    case "ms":
+    case 'ms':
       orig = orig.subtract(Duration(milliseconds: amount));
       break;
-    case "s":
+    case 's':
       orig = orig.subtract(Duration(seconds: amount));
       break;
-    case "min":
+    case 'min':
       orig = orig.subtract(Duration(minutes: amount));
       break;
-    case "h":
+    case 'h':
       orig = orig.subtract(Duration(hours: amount));
       break;
-    case "d":
+    case 'd':
       orig = orig.subtract(Duration(days: amount));
       break;
-    case "w":
+    case 'w':
       orig = orig.subtract(Duration(days: amount * 7));
       break;
-    case "mon":
+    case 'mon':
       orig = _addMonths(orig, -amount);
       break;
-    case "y":
+    case 'y':
       orig = _addMonths(orig, -amount * 12);
       break;
     default:
       throw ArgumentError(
-          "This unit is unsupported. See docs for supported units...");
+          'This unit is unsupported. See docs for supported units...');
   }
   return orig;
 }
@@ -136,46 +133,46 @@ DateTime subtract(
 ///
 /// - 'y' (years)
 num exactDiff(
-    {@required DateTime x,
-    @required DateTime y,
-    String units = "ms",
+    {required DateTime x,
+    required DateTime y,
+    String units = 'ms',
     bool asFloat = false}) {
   num diff;
   switch (units) {
-    case "ms":
+    case 'ms':
       diff = x.difference(y).inMilliseconds;
       break;
-    case "s":
+    case 's':
       diff = x.difference(y).inSeconds;
       break;
-    case "min":
+    case 'min':
       diff = x.difference(y).inMinutes;
       break;
-    case "h":
+    case 'h':
       diff = x.difference(y).inHours;
       break;
-    case "d":
+    case 'd':
       diff = x.difference(y).inDays;
       break;
-    case "w":
+    case 'w':
       diff = x.difference(y).inDays / 7;
       break;
-    case "mon":
+    case 'mon':
       diff = _monthDiff(x, y);
       break;
-    case "y":
+    case 'y':
       diff = _monthDiff(x, y) / 12;
       break;
     default:
-      throw ArgumentError("Unsupported format...");
+      throw ArgumentError('Unsupported format...');
   }
   if (!asFloat) return _absFloor(diff);
   return diff;
 }
 
 num _monthDiff(DateTime a, DateTime b) {
-  int wholeMonthDiff = ((b.year - a.year) * 12) + (b.month - a.month);
-  DateTime anchor = _addMonths(a, wholeMonthDiff);
+  var wholeMonthDiff = ((b.year - a.year) * 12) + (b.month - a.month);
+  var anchor = _addMonths(a, wholeMonthDiff);
   DateTime anchor2;
   var adjust;
 
@@ -188,12 +185,12 @@ num _monthDiff(DateTime a, DateTime b) {
     adjust = (b.millisecondsSinceEpoch - anchor.millisecondsSinceEpoch) /
         (anchor2.millisecondsSinceEpoch - anchor.millisecondsSinceEpoch);
   }
-  return -(wholeMonthDiff + adjust) ?? 0;
+  return -(wholeMonthDiff + adjust);
 }
 
 int _absFloor(num number) {
   if (number < 0) {
-    return number.ceil() ?? 0;
+    return number.ceil();
   } else {
     return number.floor();
   }

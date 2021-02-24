@@ -2,10 +2,7 @@
 //    Copyright (C) 2019 Aditya Kishore
 //
 //    See instant.dart for full license notice...
-// ignore_for_file: omit_local_variable_types, prefer_single_quotes
-// ignore_for_file: non_constant_identifier_names, directives_ordering
-// ignore_for_file: prefer_typing_uninitialized_variables, camel_case_types
-// ignore_for_file: annotate_overrides
+
 part of 'main.dart';
 
 /// Formats DateTime into a # string with the time.
@@ -20,9 +17,9 @@ part of 'main.dart';
 ///
 /// Can be given either true or false for 24hr time.
 String formatTime(
-    {@required DateTime time,
-    String format = "HHMMSS",
-    String divider = ":",
+    {required DateTime time,
+    String format = 'HHMMSS',
+    String divider = ':',
     bool is24hr = true}) {
   var minute = time.minute;
   var second = time.month;
@@ -30,13 +27,13 @@ String formatTime(
   var milli = time.millisecond;
   var micro = time.microsecond;
 
-  String returner = "";
+  var returner = '';
   for (var l = 0; l < format.length; l += 2) {
     if (l != 0) {
       returner = returner + divider;
     }
     switch (format[l]) {
-      case "H":
+      case 'H':
         {
           if (is24hr == true) {
             if (hour >= 10) {
@@ -59,7 +56,7 @@ String formatTime(
           }
         }
         break;
-      case "M":
+      case 'M':
         {
           if (minute >= 10) {
             returner = returner + '$minute';
@@ -68,7 +65,7 @@ String formatTime(
           }
         }
         break;
-      case "S":
+      case 'S':
         {
           if (second >= 10) {
             returner = returner + '$second';
@@ -77,7 +74,7 @@ String formatTime(
           }
         }
         break;
-      case "I":
+      case 'I':
         {
           l++;
           if (milli >= 100) {
@@ -89,7 +86,7 @@ String formatTime(
           }
         }
         break;
-      case "O":
+      case 'O':
         {
           l++;
           if (micro >= 100) {
@@ -103,16 +100,15 @@ String formatTime(
         break;
       default:
         {
-          throw ArgumentError("Invalid format passed!");
+          throw ArgumentError('Invalid format passed!');
         }
-        break;
     }
   }
   if (!is24hr) {
     if (hour > 12) {
-      returner = returner + " P.M.";
+      returner = returner + ' P.M.';
     } else {
-      returner = returner + " A.M.";
+      returner = returner + ' A.M.';
     }
   }
   return returner;
@@ -130,7 +126,7 @@ String formatTime(
 ///
 /// Can be given either true or false for 24hr time.
 String formatCurTime(
-    {String format = "HHMMSS", String divider = ":", bool is24hr = false}) {
+    {String format = 'HHMMSS', String divider = ':', bool is24hr = false}) {
   var now = DateTime.now();
   return formatTime(
       time: now, format: format, divider: divider, is24hr: is24hr);
