@@ -3,10 +3,7 @@
 //
 //    See instant.dart for full license notice...
 
-// ignore_for_file: omit_local_variable_types, prefer_single_quotes
-// ignore_for_file: non_constant_identifier_names, directives_ordering
-// ignore_for_file: prefer_typing_uninitialized_variables, camel_case_types
-// ignore_for_file: annotate_overrides
+
 
 part of 'main.dart';
 
@@ -17,7 +14,7 @@ part of 'main.dart';
 ///
 /// It's also more somewhat more sane than the traditional.
 class InstantStopwatch {
-  DateTime _orig;
+  late final DateTime _orig;
 
   bool _running = false;
 
@@ -114,6 +111,6 @@ class InstantStopwatch {
   }
 
   int _run(DateTime orig) {
-    return exactDiff(x: DateTime.now().toUtc(), y: orig);
+    return exactDiff(x: DateTime.now().toUtc(), y: orig) as int;
   }
 }

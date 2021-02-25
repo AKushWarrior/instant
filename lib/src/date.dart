@@ -3,10 +3,6 @@
 //
 //    See instant.dart for full license notice...
 
-// ignore_for_file: omit_local_variable_types, prefer_single_quotes
-// ignore_for_file: non_constant_identifier_names, directives_ordering
-// ignore_for_file: prefer_typing_uninitialized_variables, camel_case_types
-// ignore_for_file: annotate_overrides
 
 part of 'main.dart';
 
@@ -19,20 +15,20 @@ part of 'main.dart';
 ///
 /// Can be given any divider (ex. '/' ':' '.').
 String formatDate(
-    {@required DateTime date,
-    String format = "MMDDYYYY",
-    String divider = "/"}) {
+    {required DateTime date,
+    String format = 'MMDDYYYY',
+    String divider = '/'}) {
   var day = date.day;
   var month = date.month;
   var year = date.year;
-  String returner = "";
-  bool isLastYear = false;
+  var returner = '';
+  var isLastYear = false;
   for (var l = 0; l < format.length; l += 2) {
     if (l != 0) {
       returner = returner + divider;
     }
     switch (format[l]) {
-      case "M":
+      case 'M':
         {
           isLastYear = false;
           if (month >= 10) {
@@ -42,7 +38,7 @@ String formatDate(
           }
         }
         break;
-      case "D":
+      case 'D':
         {
           isLastYear = false;
           if (day >= 10) {
@@ -52,7 +48,7 @@ String formatDate(
           }
         }
         break;
-      case "Y":
+      case 'Y':
         {
           if (!isLastYear) {
             if (int.parse(year.toString().substring(2)) >= 10) {
@@ -69,7 +65,7 @@ String formatDate(
         break;
       default:
         {
-          throw ArgumentError("Invalid format passed!");
+          throw ArgumentError('Invalid format passed!');
         }
     }
   }
@@ -84,32 +80,32 @@ String formatDate(
 /// 'MMDDYY' 'YYYYDDMM' 'DDYYYYMM' 'MMDD' 'MMYYYY').
 ///
 /// Can be given any divider (ex. '/' ':' '.').
-String formatCurDate({String format = "MMDDYYYY", String divider = "/"}) {
+String formatCurDate({String format = 'MMDDYYYY', String divider = '/'}) {
   var now = DateTime.now();
   return formatDate(date: now, format: format, divider: divider);
 }
 
 /// Returns the given DateTime's date in words (ex. 'January 19, 2019').
 String dateInWords(DateTime date) {
-  String dateInWords = "";
-  Map<int, String> months = {
-    1: "January",
-    2: "February",
-    3: "March",
-    4: "April",
-    5: "May",
-    6: "June",
-    7: "July",
-    8: "August",
-    9: "September",
-    10: "October",
-    11: "November",
-    12: "December"
+  var dateInWords = '';
+  var months = <int, String>{
+    1: 'January',
+    2: 'February',
+    3: 'March',
+    4: 'April',
+    5: 'May',
+    6: 'June',
+    7: 'July',
+    8: 'August',
+    9: 'September',
+    10: 'October',
+    11: 'November',
+    12: 'December'
   };
-  dateInWords = months[date.month] +
-      " " +
+  dateInWords = months[date.month]! +
+      ' ' +
       date.day.toString() +
-      ", " +
+      ', ' +
       date.year.toString();
   return dateInWords;
 }
@@ -166,29 +162,29 @@ int get curYearAsInt {
 
 /// Returns current day of the week as a text String.
 String get curWeekdayAsString {
-  Map<int, String> days = {
-    1: "Monday",
-    2: "Tuesday",
-    3: "Wednesday",
-    4: "Thursday",
-    5: "Friday",
-    6: "Saturday",
-    7: "Sunday"
+  var days = <int, String>{
+    1: 'Monday',
+    2: 'Tuesday',
+    3: 'Wednesday',
+    4: 'Thursday',
+    5: 'Friday',
+    6: 'Saturday',
+    7: 'Sunday'
   };
   var now = DateTime.now();
-  return days[now.weekday];
+  return days[now.weekday]!;
 }
 
 /// Returns day of the week of given DateTime as a text String.
-String weekdayAsString({@required DateTime date}) {
-  Map<int, String> days = {
-    1: "Monday",
-    2: "Tuesday",
-    3: "Wednesday",
-    4: "Thursday",
-    5: "Friday",
-    6: "Saturday",
-    7: "Sunday"
+String weekdayAsString({required DateTime date}) {
+  var days = <int, String>{
+    1: 'Monday',
+    2: 'Tuesday',
+    3: 'Wednesday',
+    4: 'Thursday',
+    5: 'Friday',
+    6: 'Saturday',
+    7: 'Sunday'
   };
-  return days[date.weekday];
+  return days[date.weekday]!;
 }
