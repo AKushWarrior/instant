@@ -1,3 +1,14 @@
+## 0.4.1
+- Fix git issues with last commit
+- Use this instead of 0.4.0 for null-safety
+
+---
+
+## 0.4.0
+- null-safety (don't use)
+
+---
+
 # 0.3.3 - 0.3.3+1
 - Added CET timezone
 

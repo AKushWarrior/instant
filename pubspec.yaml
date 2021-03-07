@@ -1,12 +1,12 @@
 name: instant
 description: A package that exports functions for converting, formatting, and nicening of dates/times in Dart.
-version: 1.0.0
+version: 0.4.1
 homepage: https://aditya-kishore.gitbook.io/instant/
 repository: https://github.com/AKushWarrior/instant
 issue_tracker: https://github.com/AKushWarrior/instant/issues
 
 environment:
-  sdk: '>=2.12.0-259.12.beta <3.0.0'
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   
