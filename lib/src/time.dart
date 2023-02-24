@@ -22,7 +22,7 @@ String formatTime(
     String divider = ':',
     bool is24hr = true}) {
   var minute = time.minute;
-  var second = time.month;
+  var second = time.second;
   var hour = time.hour;
   var milli = time.millisecond;
   var micro = time.microsecond;
