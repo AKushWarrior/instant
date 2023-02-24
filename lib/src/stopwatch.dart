@@ -7,7 +7,7 @@ part of 'main.dart';
 ///
 /// It's also more somewhat more sane than the traditional.
 class InstantStopwatch {
-  late final DateTime _orig;
+  late DateTime _orig;
 
   bool _running = false;
 

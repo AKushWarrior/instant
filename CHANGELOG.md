@@ -1,5 +1,8 @@
 ## 0.5.1
-- Fixing a couple minor issues that have popped up
+- Fixing a couple bugs that have popped up
+  - Seconds were wrong in format time
+  - Issue with AM usage in 12 hr formatting
+  - Stopwatch didn't play correctly
 - Relicense to MIT
 - Clean up some formatting
 

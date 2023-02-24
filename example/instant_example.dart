@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:instant/instant.dart';
 
-int c = 1;
-
 void main(List<String> args) {
   var SanFran =
       curDateTimeByZone(zone: 'PDT'); //current DateTime in PDT timezone
