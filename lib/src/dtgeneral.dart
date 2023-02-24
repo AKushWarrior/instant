@@ -1,7 +1,5 @@
 part of 'main.dart';
 
-
-
 /// Adds given amount (amount) of given units (units) to given DateTime (orig).
 ///
 /// Returns the modified DateTime.
@@ -196,13 +194,13 @@ int _absFloor(num number) {
   }
 }
 
-const _daysInMonthArray = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const _daysInMonthArray = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 bool _isLeapYear(int year) =>
     (year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0));
 
 int _daysInMonth(int year, int month) {
-  var result = _daysInMonthArray[month];
+  var result = _daysInMonthArray[month - 1];
   if (month == 2 && _isLeapYear(year)) result++;
   return result;
 }

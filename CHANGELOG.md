@@ -1,3 +1,10 @@
+## 0.5.1
+- Fixing a couple minor issues that have popped up
+- Relicense to MIT
+- Clean up some formatting
+
+---
+
 ## 0.4.1
 - Fix git issues with last commit
 - Use this instead of 0.4.0 for null-safety

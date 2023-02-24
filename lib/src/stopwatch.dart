@@ -1,16 +1,9 @@
-//    Instant, a time manipulation library for Dart.
-//    Copyright (C) 2019 Aditya Kishore
-//
-//    See instant.dart for full license notice...
-
-
-
 part of 'main.dart';
 
 /// An alternative to the built in Stopwatch class.
 ///
 /// This doesn't run in the background and instead uses time comparisons,
-/// which saves a LOT of memory.
+/// which saves some memory.
 ///
 /// It's also more somewhat more sane than the traditional.
 class InstantStopwatch {

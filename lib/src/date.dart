@@ -1,9 +1,3 @@
-//    Instant, a time manipulation library for Dart.
-//    Copyright (C) 2019 Aditya Kishore
-//
-//    See instant.dart for full license notice...
-
-
 part of 'main.dart';
 
 /// Formats DateTime into a # string with the date.
